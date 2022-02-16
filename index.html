@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronômetro</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100vw;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: gray;
+        }
+
+        #container {
+            width: 500px;
+            height: 300px;
+            background-color: rgb(231, 231, 231);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        h1 {
+            font-size: 50px;
+        }
+
+        button {
+            padding: 9px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+        }
+
+        #btnIniciar {
+            background-color: green;
+        }
+
+        #btnPausar {
+            background-color: rgb(255, 136, 0);
+        }
+
+        #btnParar {
+            background-color: red;
+        }
+
+        #containNumber {
+            font-size: 60px;
+            font-weight: bold;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 0px;
+            height: 40px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            gap: 10px;
+        }
+
+        footer img {
+            width: 24px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="container">
+        <h1>Cronômetro</h1>
+        <div id="containNumber">00:00:00</div>
+        <div id="containControl">
+            <button id="btnIniciar" onclick="iniciaTimer()">Iniciar</button>
+            <button id="btnPausar" onclick="pausaTimer()">Pausar</button>
+            <button id="btnParar" onclick="paraTimer()">Parar</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>Dev. Guedes</p>
+        <a href="https://github.com/pauloguedes96">
+            <img src="./icons/GitHub-Mark-32px.png" alt="">
+        </a>
+    </footer>
+
+    <script>
+
+        let number = document.querySelector('#containNumber')
+        let segundos = 00;
+        let minutos = 00;
+        let horas = 00;
+        let intervalo = null;
+
+        function iniciaTimer() {
+            intervalo = setInterval(incrementaTimer, 1000);
+        }
+
+        function pausaTimer() {
+            clearInterval(intervalo);
+        }
+
+        function paraTimer() {
+            clearInterval(intervalo);
+            number.innerHTML = `00:00:00`;
+            segundos = 00;
+            minutos = 00;
+            horas = 00;
+        }
+
+        function incrementaTimer() {
+
+            if (segundos < 60) {
+                segundos++;
+            } else {
+                segundos = 00;
+                minutos++;
+            }
+
+            if (minutos == 60) {
+                minutos = 00;
+                horas++;
+            }
+
+            let zeroS = (segundos < 10) ? '0' : '';
+            let zeroM = (minutos < 10) ? '0' : '';
+            let zeroH = (horas < 10) ? '0' : '';
+
+            number.innerHTML = `${zeroH}${horas}:${zeroM}${minutos}:${zeroS}${segundos}`;
+        }
+
+    </script>
+
+</body>
+
+</html>
