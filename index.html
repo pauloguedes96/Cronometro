@@ -112,21 +112,42 @@
         let minutos = 00;
         let horas = 00;
         let intervalo = null;
+        let pause = false;
+        let iniciou = false;
+        let timer = 1000;
 
         function iniciaTimer() {
-            intervalo = setInterval(incrementaTimer, 1000);
+            
+            if (!intervalo) {
+                console.log('Primeiro Clique');
+                intervalo = setInterval(incrementaTimer, timer);
+            }
+            else {
+                console.log('Clique Excedido');
+            }
+
+            if(pause){
+                console.log('Quebrou o pause');
+                intervalo = setInterval(incrementaTimer, timer);
+                pause = false;
+            }
         }
 
         function pausaTimer() {
+            console.log('deu pause');
+            pause = true;
             clearInterval(intervalo);
         }
 
         function paraTimer() {
             clearInterval(intervalo);
+            intervalo = null;
+            pause = false;
             number.innerHTML = `00:00:00`;
             segundos = 00;
             minutos = 00;
             horas = 00;
+            console.log('Para Timer');
         }
 
         function incrementaTimer() {
